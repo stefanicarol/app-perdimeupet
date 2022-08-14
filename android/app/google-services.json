@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "140125533950",
+    "project_id": "perdimeupet-2444b",
+    "storage_bucket": "perdimeupet-2444b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140125533950:android:ede69147942f82f3a017af",
+        "android_client_info": {
+          "package_name": "br.com.perdimeupet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140125533950-nb609f04v1gbcursk87lin3ai42vmvhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.perdimeupet",
+            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+          }
+        },
+        {
+          "client_id": "140125533950-m0i5k4arskafs61ehi1a63kkchrsglli.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEPsFt9v0iRFrlIgC8l3wvM5jWg7lny1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140125533950-m0i5k4arskafs61ehi1a63kkchrsglli.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
