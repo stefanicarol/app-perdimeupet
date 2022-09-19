@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../utils/constants.dart';
+import '../core/utils/constants.dart';
 
 class WelcomePage extends StatelessWidget {
+  static const String routeName = 'WelcomePage';
+
   const WelcomePage({Key? key}) : super(key: key);
 
   @override
@@ -19,36 +21,10 @@ class WelcomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/main-img.png"),
-                RichText(
-                    textAlign: TextAlign.center,
-                    text: const TextSpan(children: <TextSpan>[
-                      TextSpan(
-                          text: Constants.textIntro,
-                          style: TextStyle(
-                            color: Constants.kBlackColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30.0,
-                          )),
-                      TextSpan(
-                          text: Constants.textIntroDesc1,
-                          style: TextStyle(
-                              color: Constants.kDarkBlueColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0)),
-                      TextSpan(
-                          text: Constants.textIntroDesc2,
-                          style: TextStyle(
-                              color: Constants.kBlackColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0)),
-                    ])),
-                SizedBox(height: size.height * 0.01),
-                const Text(
-                  Constants.textSmallSignUp,
-                  style: TextStyle(color: Constants.kDarkGreyColor),
+                SizedBox(
+                  height: 250,
+                  child: Image.asset("assets/images/logo.png"),
                 ),
-                SizedBox(height: size.height * 0.1),
                 SizedBox(
                   width: size.width * 0.8,
                   child: OutlinedButton(
@@ -63,27 +39,12 @@ class WelcomePage extends StatelessWidget {
                         foregroundColor: MaterialStateProperty.all<Color>(
                             Constants.kPrimaryColor),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            Constants.kBlackColor),
+                            Constants.kDarkBlueColor),
                         side: MaterialStateProperty.all<BorderSide>(
                             BorderSide.none)),
                     child: const Text(Constants.textStart),
                   ),
                 ),
-                SizedBox(
-                  width: size.width * 0.8,
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Constants.kGreyColor),
-                        side: MaterialStateProperty.all<BorderSide>(
-                            BorderSide.none)),
-                    child: const Text(
-                      Constants.textSignIn,
-                      style: TextStyle(color: Constants.kBlackColor),
-                    ),
-                  ),
-                )
               ],
             ),
           ),

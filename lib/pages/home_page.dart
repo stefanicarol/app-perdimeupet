@@ -1,57 +1,45 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import '../services/firebase_service.dart';
-import '../utils/constants.dart';
+import 'package:perdimeupet/pages/find/find_page.dart';
+import 'package:perdimeupet/pages/lost/lost_page.dart';
+import 'package:perdimeupet/pages/register_pet/register_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  static const String routeName = 'HomePage';
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  User? user = FirebaseAuth.instance.currentUser;
-  @override
-  void initState() {
-    super.initState();
-  }
+  int _index = 0;
+  final List _pages = [
+    const FindPage(),
+    const LostPage(),
+    const RegisterPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.white,
-              ),
-              onPressed: () async {
-                FirebaseService service = FirebaseService();
-                await service.signOutFromGoogle();
-                Navigator.pushReplacementNamed(
-                    context, Constants.signInNavigate);
-              },
-            )
-          ],
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: Colors.blue),
-          title: const Text("Home"),
-        ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(user!.email!),
-            Text(user!.displayName!),
-            CircleAvatar(
-              backgroundImage: NetworkImage(user!.photoURL!),
-              radius: 20,
-            )
-          ],
-        )));
+      body: _pages[_index],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _index,
+        onTap: onTabTapped,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.pets), label: "Perdidos"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.pets_sharp), label: "Achados"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_a_photo), label: "Cadastrar"),
+        ],
+      ),
+    );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _index = index;
+    });
   }
 }
