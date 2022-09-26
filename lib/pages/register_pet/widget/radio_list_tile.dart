@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/app_theme.dart';
+
 enum SingingCharacter { cachorro, gato, perdido, achado }
 
 extension OptionsMapper on SingingCharacter {
@@ -40,6 +42,7 @@ class _CustomRadioListTileState extends State<CustomRadioListTile> {
   Widget build(BuildContext context) {
     return Expanded(
       child: RadioListTile<SingingCharacter>(
+        activeColor: AppTheme.defaultTheme.secondaryHeaderColor,
         title: Text(widget.title),
         contentPadding: const EdgeInsets.all(0),
         value: widget.value,

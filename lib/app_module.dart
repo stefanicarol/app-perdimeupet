@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:perdimeupet/core/repository/pet.repository.dart';
+import 'package:perdimeupet/pages/find/find_module.dart';
 import 'package:perdimeupet/pages/sign_in_page.dart';
 import 'core/repository/character.repository.dart';
 import 'core/services/api_provider.dart';
@@ -24,5 +25,6 @@ class AppModule extends Module {
     ChildRoute('/welcome', child: (context, args) => const WelcomePage()),
     ChildRoute('/homepage', child: (context, args) => const HomePage()),
     ModuleRoute('/register-module', module: RegisterModule()),
+    ModuleRoute('/find-module', module: FindModule()),
   ];
 }

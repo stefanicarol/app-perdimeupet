@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:perdimeupet/theme/app_theme.dart';
 import '../../core/utils/custom_dropdown.dart';
 
 import 'pages/storage_page.dart';
@@ -30,11 +31,18 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
+          ),
+          backgroundColor: AppTheme.defaultTheme.primaryColor,
           title: const Text("Cadastre seu pet"),
           centerTitle: true,
           elevation: 0,
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: AppTheme.defaultTheme.secondaryHeaderColor,
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -42,7 +50,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       store: store,
                     )),
           ),
-          child: const Icon(Icons.add_a_photo),
+          child: const Icon(
+            Icons.add_a_photo,
+            color: Colors.black,
+          ),
         ),
         body: Observer(builder: (context) {
           if (store.fecthResponse.isLoading) {

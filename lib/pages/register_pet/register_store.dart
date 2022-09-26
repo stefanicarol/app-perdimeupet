@@ -74,8 +74,8 @@ abstract class _RegisterStoreBase with Store {
 
   @action
   Future<void> post() async {
-    List<PetElements> elements = [];
-    PetElements petElement = PetElements(
+    PetModel pet = PetModel(
+      id: pets.length,
       catBreed: idList[0],
       color: idList[1],
       gender: idList[2],
@@ -86,9 +86,6 @@ abstract class _RegisterStoreBase with Store {
       species: species,
       status: petStatus,
     );
-
-    elements.add(petElement);
-    PetModel pet = PetModel(elements: elements, id: pets.length);
     appResponse = AppResponse.loading(message: "logando");
     await _repo.post(pet);
     appResponse = AppResponse.completed(pet, message: "complete");

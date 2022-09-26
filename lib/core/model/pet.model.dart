@@ -1,27 +1,7 @@
 class PetModel {
   final int id;
-  List<PetElements> elements;
-
-  PetModel({required this.id, required this.elements});
-
-  factory PetModel.fromJson(Map<String, dynamic> json) {
-    return PetModel(
-        id: json['id'],
-        elements: List.from(json['elements'])
-            .map((e) => PetElements.fromJson(e))
-            .toList());
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['elements'] = elements.map((v) => v.toJson()).toList();
-    return data;
-  }
-}
-
-class PetElements {
-  final int catBreed;
+  int? catBreed;
+  int? dogBreed;
   final int color;
   final int gender;
   final String owner;
@@ -31,8 +11,10 @@ class PetElements {
   final int species;
   final int status;
 
-  PetElements({
-    required this.catBreed,
+  PetModel({
+    required this.id,
+    this.catBreed,
+    this.dogBreed,
     required this.color,
     required this.gender,
     required this.owner,
@@ -43,9 +25,11 @@ class PetElements {
     required this.status,
   });
 
-  factory PetElements.fromJson(Map<String, dynamic> json) {
-    return PetElements(
+  factory PetModel.fromJson(Map<String, dynamic> json) {
+    return PetModel(
+        id: json['id'],
         catBreed: json['cat_breed'],
+        dogBreed: json['dog_breed'],
         color: json['color'],
         gender: json['gender'],
         owner: json['owner'],
@@ -58,7 +42,9 @@ class PetElements {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['cat_breed'] = catBreed;
+    data['dog_breed'] = catBreed;
     data['color'] = color;
     data['gender'] = gender;
     data['owner'] = owner;

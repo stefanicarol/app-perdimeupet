@@ -5,8 +5,10 @@ class AppTheme {
     return ThemeData(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: _AppColors.primaryColor),
-        fontFamily: 'SourceSansPro',
-        primaryColor: _AppColors.primaryColor,
+        useMaterial3: true,
+        fontFamily: 'Poppins',
+        secondaryHeaderColor: AppColors.secondaryColor,
+        primaryColor: AppColors.primaryColor,
         highlightColor: _AppColors.secondaryColor,
         brightness: Brightness.light,
         hoverColor: const Color.fromARGB(255, 22, 22, 22),
@@ -30,30 +32,31 @@ class AppTheme {
           bodyText2: bodyText2,
           subtitle1: subtitle1,
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           fillColor: Colors.transparent,
-          hintStyle: const TextStyle(
-              fontWeight: FontWeight.normal, color: Colors.black45),
-          contentPadding: const EdgeInsets.only(left: 10, top: 10),
-          border: const OutlineInputBorder(),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
-              borderSide: const BorderSide(color: Colors.black45, width: 1)),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
-              borderSide:
-                  const BorderSide(color: _AppColors.primaryColor, width: 2)),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
-              borderSide: const BorderSide(color: Colors.red, width: 1)),
+          hintStyle:
+              TextStyle(fontWeight: FontWeight.normal, color: Colors.black45),
+          contentPadding:
+              EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+          border: OutlineInputBorder(),
+          // enabledBorder: OutlineInputBorder(
+          //     borderRadius: BorderRadius.circular(5.0),
+          //     borderSide: const BorderSide(color: Colors.black45, width: 1)),
+          // focusedBorder: OutlineInputBorder(
+          //     borderRadius: BorderRadius.circular(5.0),
+          //     borderSide:
+          //         const BorderSide(color: _AppColors.primaryColor, width: 2)),
+          // errorBorder: OutlineInputBorder(
+          //     borderRadius: BorderRadius.circular(5.0),
+          //     borderSide: const BorderSide(color: Colors.red, width: 1)),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
           foregroundColor:
-              MaterialStateProperty.all<Color>(_AppColors.primaryColor),
+              MaterialStateProperty.all<Color>(AppColors.primaryColor),
           backgroundColor:
-              MaterialStateProperty.all<Color>(_AppColors.primaryButtonColor),
+              MaterialStateProperty.all<Color>(AppColors.primaryColor),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         )));
   }
@@ -62,7 +65,7 @@ class AppTheme {
   MaterialColor color = primaryColorShades;
   static ThemeData get bebasNueTheme {
     return ThemeData(
-      fontFamily: 'BebasNue',
+      fontFamily: 'Poppins',
       primaryColor: _AppColors.accentColor,
       textTheme: TextTheme(
         headline1: headline1,
@@ -134,19 +137,19 @@ class AppTheme {
 }
 
 class _AppColors {
-  static const Color primaryColor = Color.fromARGB(255, 12, 12, 12);
+  static const Color primaryColor = Colors.white;
   static const Color accentColor = Color(0xffE2E3E4);
-  static const Color secondaryColor = Color.fromARGB(255, 12, 12, 12);
+  static const Color secondaryColor = Color(0xff4A6572);
   static const Color primaryTextColor = Color.fromARGB(255, 12, 12, 12);
   static const Color secondaryTextColor = Color(0xff374049);
-  static const Color primaryButtonColor = Color(0xff053F64);
+  static const Color primaryButtonColor = Colors.blueGrey;
 }
 
 class AppColors {
-  static const Color primaryColor = Color.fromRGBO(0, 90, 135, 1);
+  static const Color primaryColor = Color(0xff232f34);
   static const Color onPrimary = Color(0xff0CF2B4);
   static const Color accentColor = Color.fromARGB(255, 13, 13, 14);
-  static const Color secondaryColor = Color(0xff053F63);
+  static const Color secondaryColor = Color(0xfff9aa33);
   static const Color primaryTextColor = Color(0xff005A87);
   static const Color secondaryTextColor = Color(0xff374049);
   static const Color secondaryButtonColor = Color(0xff00CD7C);

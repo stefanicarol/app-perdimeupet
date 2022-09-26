@@ -1,6 +1,7 @@
 class CharacterModel {
   final int id;
   final String description;
+
   final List<Elements> elements;
 
   CharacterModel(
