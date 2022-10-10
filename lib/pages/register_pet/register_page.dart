@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:perdimeupet/core/model/character.model.dart';
 import 'package:perdimeupet/theme/app_theme.dart';
-import '../../core/utils/custom_dropdown.dart';
-
 import 'pages/storage_page.dart';
 import 'register_store.dart';
 import 'widget/radio_list_tile.dart';
@@ -17,9 +17,14 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final store = Modular.get<RegisterStore>();
+
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
-  final store = Modular.get<RegisterStore>();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController observationController = TextEditingController();
 
   @override
   void initState() {
@@ -40,20 +45,6 @@ class _RegisterPageState extends State<RegisterPage> {
           title: const Text("Cadastre seu pet"),
           centerTitle: true,
           elevation: 0,
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppTheme.defaultTheme.secondaryHeaderColor,
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => StoragePage(
-                      store: store,
-                    )),
-          ),
-          child: const Icon(
-            Icons.add_a_photo,
-            color: Colors.black,
-          ),
         ),
         body: Observer(builder: (context) {
           if (store.fecthResponse.isLoading) {
@@ -95,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: SingingCharacter.cachorro,
                           onChanged: (value) {
                             store.classification = SingingCharacter.cachorro;
-                            store.species = SingingCharacter.cachorro.id;
+                            store.species = store.speciesList!.last;
                           },
                         ),
                         CustomRadioListTile(
@@ -104,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: SingingCharacter.gato,
                           onChanged: (value) {
                             store.classification = value;
-                            store.species = SingingCharacter.gato.id;
+                            store.species = store.speciesList!.first;
                           },
                         ),
                       ],
@@ -136,173 +127,196 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const Divider(),
                     const SizedBox(height: 10),
-                    store.petStatus == SingingCharacter.gato.id
-                        ? CustomDropDown<int>(
-                            labelText: true,
-                            labelTitle: "Raça gato",
-                            selectedItem: 1,
-                            onChanged: (id) =>
-                                store.setElements(i: id, index: 0),
-                            selectedItemBuilder: (_) => store.characterList
-                                .elementAt(0)
-                                .elements
-                                .map((character) => Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      character.value,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.start,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    )))
-                                .toList(),
-                            items: store.characterList
-                                .elementAt(0)
-                                .elements
-                                .map((character) {
-                              return DropdownMenuItem(
-                                  value: character.id,
-                                  child: Text(character.value,
-                                      style: const TextStyle(
-                                          color: Colors.black)));
-                            }).toList())
-                        : CustomDropDown<int>(
-                            labelText: true,
-                            labelTitle: "Raça cachorro",
-                            selectedItem: 1,
-                            onChanged: (id) =>
-                                store.setElements(i: id, index: 0),
-                            selectedItemBuilder: (_) => store.characterList
-                                .elementAt(1)
-                                .elements
-                                .map((character) => Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      character.value,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.start,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    )))
-                                .toList(),
-                            items: store.characterList
-                                .elementAt(1)
-                                .elements
-                                .map((character) {
-                              return DropdownMenuItem(
-                                  value: character.id,
-                                  child: Text(character.value,
-                                      style: const TextStyle(
-                                          color: Colors.black)));
-                            }).toList()),
+                    const Text("Raça gato",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    DropdownButtonFormField(
+                      items: store.catBreedList!
+                          .map<DropdownMenuItem<CatBreed>>((value) {
+                        return DropdownMenuItem<CatBreed>(
+                          value: value,
+                          child: Text(
+                            value.catBreed!,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        store.catBreed = newValue as CatBreed?;
+                      },
+                    ),
                     const SizedBox(height: 10),
-                    CustomDropDown<int>(
-                        labelText: true,
-                        labelTitle: "Cor",
-                        selectedItem: 2,
-                        onChanged: (id) => store.setElements(i: id, index: 1),
-                        selectedItemBuilder: (_) => store.characterList
-                            .elementAt(2)
-                            .elements
-                            .map((character) => Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  character.value,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(color: Colors.black),
-                                )))
-                            .toList(),
-                        items: store.characterList
-                            .elementAt(2)
-                            .elements
-                            .map((character) {
-                          return DropdownMenuItem(
-                              value: character.id,
-                              child: Text(character.value,
-                                  style: const TextStyle(color: Colors.black)));
-                        }).toList()),
+                    const Text("Cor",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    DropdownButtonFormField(
+                      items: store.colorList!
+                          .map<DropdownMenuItem<ColorPet>>((value) {
+                        return DropdownMenuItem<ColorPet>(
+                          value: value,
+                          child: Text(
+                            value.color!,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        store.color = newValue as ColorPet?;
+                      },
+                    ),
                     const SizedBox(height: 10),
-                    CustomDropDown<int>(
-                        labelText: true,
-                        labelTitle: "Sexo",
-                        selectedItem: 3,
-                        onChanged: (id) => store.setElements(i: id, index: 2),
-                        selectedItemBuilder: (_) => store.characterList
-                            .elementAt(3)
-                            .elements
-                            .map((character) => Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  character.value,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(color: Colors.black),
-                                )))
-                            .toList(),
-                        items: store.characterList
-                            .elementAt(3)
-                            .elements
-                            .map((character) {
-                          return DropdownMenuItem(
-                              value: character.id,
-                              child: Text(character.value,
-                                  style: const TextStyle(color: Colors.black)));
-                        }).toList()),
+                    const Text("Sexo",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    DropdownButtonFormField(
+                      items: store.genderList!
+                          .map<DropdownMenuItem<Gender>>((value) {
+                        return DropdownMenuItem<Gender>(
+                          value: value,
+                          child: Text(
+                            value.gender!,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        store.gender = newValue as Gender?;
+                      },
+                    ),
                     const SizedBox(height: 10),
-                    CustomDropDown<int>(
-                        labelText: true,
-                        labelTitle: "Pelagem",
-                        selectedItem: 4,
-                        onChanged: (id) => store.setElements(i: id, index: 3),
-                        selectedItemBuilder: (_) => store.characterList
-                            .elementAt(4)
-                            .elements
-                            .map((character) => Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  character.value,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(color: Colors.black),
-                                )))
-                            .toList(),
-                        items: store.characterList
-                            .elementAt(4)
-                            .elements
-                            .map((character) {
-                          return DropdownMenuItem(
-                              value: character.id,
-                              child: Text(character.value,
-                                  style: const TextStyle(color: Colors.black)));
-                        }).toList()),
+                    const Text("Pelagem",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    DropdownButtonFormField(
+                      items: store.pelageList!
+                          .map<DropdownMenuItem<Pelage>>((value) {
+                        return DropdownMenuItem<Pelage>(
+                          value: value,
+                          child: Text(
+                            value.pelage!,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        store.pelage = newValue as Pelage?;
+                      },
+                    ),
                     const SizedBox(height: 10),
-                    CustomDropDown<int>(
-                        labelText: true,
-                        labelTitle: "Porte",
-                        selectedItem: 5,
-                        onChanged: (id) => store.setElements(i: id, index: 4),
-                        selectedItemBuilder: (_) => store.characterList
-                            .elementAt(5)
-                            .elements
-                            .map((character) => Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  character.value,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(color: Colors.black),
-                                )))
-                            .toList(),
-                        items: store.characterList
-                            .elementAt(5)
-                            .elements
-                            .map((character) {
-                          return DropdownMenuItem(
-                              value: character.id,
-                              child: Text(character.value,
-                                  style: const TextStyle(color: Colors.black)));
-                        }).toList()),
+                    const Text("Porte",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    DropdownButtonFormField(
+                      items: store.sizeList!
+                          .map<DropdownMenuItem<SizePet>>((value) {
+                        return DropdownMenuItem<SizePet>(
+                          value: value,
+                          child: Text(
+                            value.size!,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        store.size = newValue as SizePet?;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    const Text("Número para contato",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    TextField(
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: "(##) #####-####")
+                      ],
+                      controller: phoneController,
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text("Cidade/Estado",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    TextField(
+                      controller: cityController,
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text("Data da ocorrência",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    TextField(
+                      controller: dateController,
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: "##/##/####")
+                      ],
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text("Observação",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    TextField(
+                      controller: observationController,
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text("Inserir foto",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    store.imagem != null
+                        ? const SizedBox()
+                        : IconButton(
+                            onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StoragePage(
+                                            store: store,
+                                          )),
+                                ),
+                            icon: const Icon(
+                              Icons.add_a_photo,
+                              size: 32,
+                            )),
                     const SizedBox(height: 20),
                     store.imagem != null
                         ? Center(
@@ -316,14 +330,27 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           )
                         : const SizedBox(),
-                    const SizedBox(height: 20),
                     Center(
                       child: ElevatedButton(
                           onPressed: () {
+                            store.observation = observationController.text;
+                            store.date = dateController.text;
+                            store.city = cityController.text;
+                            store.numberPhone = phoneController.text;
                             store.post();
                           },
-                          child: const Text("Finalizar cadastro")),
-                    )
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  AppTheme.defaultTheme.secondaryHeaderColor)),
+                          child: const Text(
+                            "Finalizar cadastro",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )),
+                    ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),

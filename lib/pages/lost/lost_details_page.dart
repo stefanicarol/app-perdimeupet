@@ -4,15 +4,15 @@ import 'package:perdimeupet/theme/app_theme.dart';
 import '../../core/utils/bottom_sheet_custom.dart';
 import '../../core/utils/leading_appbar_custom.dart';
 
-class FindDetailsPage extends StatefulWidget {
+class LostDetailsPage extends StatefulWidget {
   final PetModel petModel;
-  const FindDetailsPage({Key? key, required this.petModel}) : super(key: key);
+  const LostDetailsPage({Key? key, required this.petModel}) : super(key: key);
 
   @override
-  _FindDetailsPageState createState() => _FindDetailsPageState();
+  _LostDetailsPageState createState() => _LostDetailsPageState();
 }
 
-class _FindDetailsPageState extends State<FindDetailsPage> {
+class _LostDetailsPageState extends State<LostDetailsPage> {
   @override
   Widget build(BuildContext context) {
     String data =
@@ -44,13 +44,12 @@ class _FindDetailsPageState extends State<FindDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Center(
-                            child: Text("ACHADO",
+                            child: Text("PERDIDO",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 22,
-                                    color: AppTheme
-                                        .defaultTheme.secondaryHeaderColor))),
+                                    color: AppTheme.defaultTheme.errorColor))),
                         Row(children: [
                           Expanded(
                               child: Text(data,
@@ -72,7 +71,7 @@ class _FindDetailsPageState extends State<FindDetailsPage> {
                           const SizedBox(width: 10),
                           Expanded(
                               child: Text(
-                                  "encontrado em ${widget.petModel.city} na data de ${widget.petModel.date}.",
+                                  "perdido em ${widget.petModel.city} na data de ${widget.petModel.date}.",
                                   maxLines: 2))
                         ]),
                       ]),

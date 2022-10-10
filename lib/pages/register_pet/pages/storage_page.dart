@@ -25,7 +25,7 @@ class _StoragePageState extends State<StoragePage> {
 
   Future<XFile?> getImage() async {
     final ImagePicker picker = ImagePicker();
-    XFile? image = await picker.pickImage(source: ImageSource.camera);
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
     return image;
   }
 
@@ -89,8 +89,14 @@ class _StoragePageState extends State<StoragePage> {
       appBar: AppBar(
         centerTitle: true,
         title: uploading
-            ? Text('${total.round()}% enviado')
-            : const Text('Firebase Storage'),
+            ? Text(
+                '${total.round()}% enviado',
+                style: const TextStyle(color: Colors.black),
+              )
+            : const Text(
+                'Firebase Storage',
+                style: TextStyle(color: Colors.black),
+              ),
         actions: [
           uploading
               ? const Padding(
@@ -107,7 +113,7 @@ class _StoragePageState extends State<StoragePage> {
                   ),
                 )
               : IconButton(
-                  icon: const Icon(Icons.upload),
+                  icon: const Icon(Icons.add_a_photo),
                   onPressed: pickAndUploadImage,
                 )
         ],
@@ -132,7 +138,10 @@ class _StoragePageState extends State<StoragePage> {
                         widget.store.imagem = arquivo;
                         Navigator.pop(context);
                       },
-                      child: const Text("Inserir imagem")),
+                      child: const Text(
+                        "adicionar",
+                        style: TextStyle(color: Colors.white),
+                      )),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () => deleteImage(),

@@ -9,12 +9,12 @@ extension OptionsMapper on SingingCharacter {
     switch (this) {
       case SingingCharacter.achado:
         return 1;
+      case SingingCharacter.perdido:
+        return 2;
       case SingingCharacter.cachorro:
         return 2;
       case SingingCharacter.gato:
         return 1;
-      default:
-        return 2;
     }
   }
 }

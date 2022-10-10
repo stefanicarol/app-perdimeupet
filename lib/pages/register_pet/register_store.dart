@@ -36,35 +36,84 @@ abstract class _RegisterStoreBase with Store {
   String? imagem;
 
   @observable
-  int species = 1;
+  Species? species;
 
   @observable
-  int petStatus = 1;
+  int petStatus = 2;
 
   @observable
-  var idList = [0, 0, 0, 0, 0];
+  List<CatBreed>? catBreedList;
+  @observable
+  List<ColorPet>? colorList;
+  @observable
+  List<Gender>? genderList;
+  @observable
+  List<Pelage>? pelageList;
+  @observable
+  List<SizePet>? sizeList;
+  @observable
+  List<Species>? speciesList;
 
   @observable
-  List<CharacterModel> characterList = [];
+  List<CharacterModel> character = [];
 
   @observable
   List<PetModel> pets = [];
 
   @action
-  setElements({required int i, required int index}) => idList[index] = i;
-
-  @action
-  setSpecies(int i) => species = i;
+  setSpecies(Species i) => species = i;
 
   @action
   setStatus(int i) => petStatus = i;
 
+  @observable
+  CatBreed? catBreed;
+
+  @observable
+  ColorPet? color;
+
+  @observable
+  Gender? gender;
+
+  @observable
+  Pelage? pelage;
+
+  @observable
+  SizePet? size;
+
+  @observable
+  Species? speciesPet;
+
+  @observable
+  int? statusPet;
+
+  @observable
+  String? numberPhone;
+
+  @observable
+  String? observation;
+
+  @observable
+  String? city;
+
+  @observable
+  String? date;
+
   @action
   Future<List<CharacterModel>> fecth() async {
     fecthResponse = AppResponse.loading(message: "logando");
-    characterList = await _repository.fetch();
-    fecthResponse = AppResponse.completed(characterList, message: "logando");
-    return characterList;
+    character = await _repository.fetch();
+
+    for (var element in character) {
+      catBreedList = element.catBreed!;
+      colorList = element.color!;
+      genderList = element.gender;
+      pelageList = element.pelage!;
+      sizeList = element.size!;
+      speciesList = element.species!;
+    }
+    fecthResponse = AppResponse.completed(character, message: "logando");
+    return character;
   }
 
   @action
@@ -75,19 +124,23 @@ abstract class _RegisterStoreBase with Store {
   @action
   Future<void> post() async {
     PetModel pet = PetModel(
-      id: pets.length,
-      catBreed: idList[0],
-      color: idList[1],
-      gender: idList[2],
-      owner: _auth.currentUser!.email!,
-      pelage: idList[3],
-      photo: imagem!,
-      size: idList[4],
-      species: species,
-      status: petStatus,
-    );
+        id: pets.length,
+        catBreed: catBreed,
+        color: color!,
+        gender: gender!,
+        owner: _auth.currentUser!.email!,
+        pelage: pelage!,
+        photo: imagem!,
+        size: size!,
+        species: species!,
+        status: petStatus,
+        date: date,
+        city: city,
+        contact: numberPhone,
+        observation: observation);
     appResponse = AppResponse.loading(message: "logando");
     await _repo.post(pet);
     appResponse = AppResponse.completed(pet, message: "complete");
+    imagem = null;
   }
 }

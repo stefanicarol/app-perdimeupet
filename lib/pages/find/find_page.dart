@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:perdimeupet/theme/app_theme.dart';
+
 import '../../core/utils/app_bar_widget.dart';
 import 'find_details_page.dart';
+import 'find_store.dart';
 
 class FindPage extends StatefulWidget {
   const FindPage({Key? key}) : super(key: key);
@@ -12,18 +15,12 @@ class FindPage extends StatefulWidget {
 }
 
 class _FindPageState extends State<FindPage> {
-  final List<String> _listItem = [
-    'assets/images/two.jpg',
-    'assets/images/three.jpg',
-    'assets/images/four.jpg',
-    'assets/images/five.jpg',
-    'assets/images/one.jpg',
-    'assets/images/two.jpg',
-    'assets/images/three.jpg',
-    'assets/images/four.jpg',
-    'assets/images/five.jpg',
-    'assets/cat.png',
-  ];
+  final FindStore store = FindStore();
+  @override
+  void initState() {
+    store.fecth().whenComplete(() => store.fetchFind());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,72 +109,7 @@ class _FindPageState extends State<FindPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    OutlinedButton.icon(
-                      icon: const Icon(FontAwesomeIcons.dog,
-                          color: Colors.black87),
-                      label: const Text(
-                        "Auau",
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                      onPressed: () => print("it's pressed"),
-                      style: ElevatedButton.styleFrom(
-                        side:
-                            const BorderSide(width: 1.5, color: Colors.black12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    OutlinedButton.icon(
-                      icon: const Icon(FontAwesomeIcons.cat,
-                          color: Colors.black87),
-                      label: const Text(
-                        "Miau",
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                      onPressed: () => print("it's pressed"),
-                      style: ElevatedButton.styleFrom(
-                        elevation: 2,
-                        side:
-                            const BorderSide(width: 1.5, color: Colors.black12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    OutlinedButton.icon(
-                      icon: const Icon(Icons.pets, color: Colors.black),
-                      label: const Text(
-                        "Todos",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () => print("it's pressed"),
-                      style: ElevatedButton.styleFrom(
-                        primary: AppTheme.defaultTheme.secondaryHeaderColor,
-                        side: BorderSide(
-                            width: 1.5,
-                            color: AppTheme.defaultTheme.secondaryHeaderColor),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Icon(FontAwesomeIcons.filter),
-                  ],
-                ),
+                const Filter(),
                 const SizedBox(
                   height: 10,
                 ),
@@ -186,9 +118,9 @@ class _FindPageState extends State<FindPage> {
                   height: 10,
                 ),
                 Text(
-                  "Pets perdidos",
+                  "Pets achados",
                   style: TextStyle(
-                    color: AppTheme.defaultTheme.errorColor,
+                    color: AppTheme.defaultTheme.secondaryHeaderColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 26,
                   ),
@@ -196,99 +128,183 @@ class _FindPageState extends State<FindPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                GridView.count(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  children: _listItem
-                      .map((item) => Card(
-                            color: Colors.transparent,
-                            elevation: 0,
-                            child: PhysicalModel(
-                              color: Colors.transparent,
-                              elevation: 3,
-                              shadowColor: Colors.black38,
-                              borderRadius: BorderRadius.circular(20),
-                              child: GestureDetector(
+                Observer(builder: (context) {
+                  if (store.response.isCompleted) {
+                    return GridView.count(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: store.petList!
+                          .map((item) => GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const FindDetailsPage(),
+                                      builder: (context) => FindDetailsPage(
+                                        petModel: item,
+                                      ),
                                     ),
                                   );
                                 },
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: DecorationImage(
-                                            image: AssetImage(item),
-                                            fit: BoxFit.cover)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          width: 180,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(20.0),
-                                                      bottomRight:
-                                                          Radius.circular(
-                                                              20.0)),
-                                              gradient: LinearGradient(
-                                                  begin: Alignment.bottomRight,
-                                                  colors: [
-                                                    Colors.red.withOpacity(.5),
-                                                    Colors.red.withOpacity(.5),
-                                                  ])),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 14.0, bottom: 4),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: const <Widget>[
-                                                Text(
-                                                  "Macho",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                child: Card(
+                                  color: Colors.transparent,
+                                  elevation: 0,
+                                  child: PhysicalModel(
+                                    color: Colors.transparent,
+                                    elevation: 3,
+                                    shadowColor: Colors.black38,
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            image: DecorationImage(
+                                                image: NetworkImage(item.photo),
+                                                fit: BoxFit.cover)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              width: 180,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  20.0),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  20.0)),
+                                                  gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment.bottomRight,
+                                                      colors: [
+                                                        Colors.black
+                                                            .withOpacity(.4),
+                                                        Colors.black
+                                                            .withOpacity(.2),
+                                                      ])),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 14.0, bottom: 4),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      item.gender.gender!,
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      item.catBreed!.catBreed!,
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Text(
-                                                  "Sem raça definida",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                )
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    );
+                  }
+                  if (store.response.isLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return const SizedBox();
+                }),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class Filter extends StatelessWidget {
+  const Filter({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        OutlinedButton.icon(
+          icon: const Icon(FontAwesomeIcons.dog, color: Colors.black87),
+          label: const Text(
+            "Auau",
+            style: TextStyle(color: Colors.black87),
+          ),
+          onPressed: () => print("it's pressed"),
+          style: ElevatedButton.styleFrom(
+            side: const BorderSide(width: 1.5, color: Colors.black12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        OutlinedButton.icon(
+          icon: const Icon(FontAwesomeIcons.cat, color: Colors.black87),
+          label: const Text(
+            "Miau",
+            style: TextStyle(color: Colors.black87),
+          ),
+          onPressed: () => print("it's pressed"),
+          style: ElevatedButton.styleFrom(
+            elevation: 2,
+            side: const BorderSide(width: 1.5, color: Colors.black12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        OutlinedButton.icon(
+          icon: const Icon(Icons.pets, color: Colors.black),
+          label: const Text(
+            "Todos",
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () => print("it's pressed"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppTheme.defaultTheme.secondaryHeaderColor,
+            side: BorderSide(
+                width: 1.5, color: AppTheme.defaultTheme.secondaryHeaderColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

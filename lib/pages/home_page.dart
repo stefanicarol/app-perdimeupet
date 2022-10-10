@@ -18,10 +18,9 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = <Widget>[];
   @override
   void initState() {
-    _pages.add(FindPage());
-    _pages.add(const RegisterPage());
     _pages.add(const LostPage());
-
+    _pages.add(const RegisterPage());
+    _pages.add(const FindPage());
     super.initState();
   }
 
@@ -73,6 +72,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FloatingActionButton(
+          heroTag: "btn/2",
           backgroundColor: _currentIndex == 1
               ? Colors.grey
               : AppTheme.defaultTheme.secondaryHeaderColor,
