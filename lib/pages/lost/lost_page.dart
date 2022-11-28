@@ -109,7 +109,7 @@ class _LostPageState extends State<LostPage> {
                                                 ? Expanded(
                                                     child: SizedBox(
                                                       height: 130,
-                                                      width: 150,
+                                                      width: 180,
                                                       child: Image.asset(
                                                         "assets/encontrado.png",
                                                         fit: BoxFit.fill,

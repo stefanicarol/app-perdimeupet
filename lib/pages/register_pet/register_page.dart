@@ -5,6 +5,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:perdimeupet/core/model/character.model.dart';
 import 'package:perdimeupet/theme/app_theme.dart';
+import '../home_page.dart';
+import '../lost/lost_page.dart';
 import 'pages/storage_page.dart';
 import 'register_store.dart';
 import 'widget/radio_list_tile.dart';
@@ -86,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               isDog = true;
                             });
                             store.classification = SingingCharacter.cachorro;
-                            store.species = store.speciesList!.last.species;
+                            store.species = SingingCharacter.cachorro.name;
                           },
                         ),
                         CustomRadioListTile(
@@ -98,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               isDog = false;
                             });
                             store.classification = value;
-                            store.species = store.speciesList!.first.species;
+                            store.species = SingingCharacter.gato.name;
                           },
                         ),
                       ],
@@ -387,6 +389,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             store.date = dateController.text;
                             store.city = cityController.text;
                             store.numberPhone = phoneController.text;
+                            salve(store);
                             await store.post();
                           },
                           style: ButtonStyle(
@@ -408,5 +411,45 @@ class _RegisterPageState extends State<RegisterPage> {
           }
           return const SizedBox();
         }));
+  }
+
+  void salve(RegisterStore store) {
+    Widget continuaButton = TextButton(
+      child: Text(
+        "fechar",
+        style: TextStyle(color: AppTheme.defaultTheme.primaryColor),
+      ),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text("Informação"),
+      content: const Text("Cadastro concluído com sucesso"),
+      actions: [
+        continuaButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Observer(builder: (context) {
+          if (store.appResponse.isCompleted) {
+            return alert;
+          }
+          if (store.appResponse.isLoading) {
+            return const Center(
+              child: SizedBox(
+                  width: 50, height: 50, child: CircularProgressIndicator()),
+            );
+          }
+          return const SizedBox();
+        });
+      },
+    );
   }
 }

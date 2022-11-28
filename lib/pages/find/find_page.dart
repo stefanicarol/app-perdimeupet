@@ -109,7 +109,7 @@ class _FindPageState extends State<FindPage> {
                                                 ? Expanded(
                                                     child: SizedBox(
                                                       height: 130,
-                                                      width: 150,
+                                                      width: 180,
                                                       child: Image.asset(
                                                         "assets/devolvido.png",
                                                         fit: BoxFit.fill,

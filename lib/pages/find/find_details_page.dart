@@ -15,8 +15,11 @@ class FindDetailsPage extends StatefulWidget {
 class _FindDetailsPageState extends State<FindDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    String raca = widget.petModel.species == "gato"
+        ? widget.petModel.catBreed!.toLowerCase()
+        : widget.petModel.dogBreed!.toLowerCase();
     String data =
-        "${widget.petModel.species} ${widget.petModel.gender}, da raça ${widget.petModel.catBreed!.toLowerCase()}, cor ${widget.petModel.color}, pelagem ${widget.petModel.pelage}, porte ${widget.petModel.size}.";
+        "${widget.petModel.species} ${widget.petModel.gender}, da raça $raca, cor ${widget.petModel.color}, pelagem ${widget.petModel.pelage}, porte ${widget.petModel.size}.";
     String status =
         widget.petModel.returned ? "DEVOLVIDO AO DONO" : "DONO NÃO ENCONTRADO";
     return SafeArea(

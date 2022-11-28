@@ -10,8 +10,9 @@ class PetRepository {
 
   PetRepository(this._provider);
 
-  post(PetModel petModel) async {
-    await _provider!.restClient!.post(petModel, url);
+  Future<PetModel> post(PetModel petModel) async {
+    var response = await _provider!.restClient!.post(petModel, url);
+    return PetModel.fromJson(response);
   }
 
   Future<List<PetModel>> fetch() async {

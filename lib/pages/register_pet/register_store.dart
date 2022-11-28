@@ -36,7 +36,7 @@ abstract class _RegisterStoreBase with Store {
   String? imagem;
 
   @observable
-  String? species;
+  String species = SingingCharacter.cachorro.name;
 
   @observable
   String petStatus = "perdido";
@@ -107,6 +107,9 @@ abstract class _RegisterStoreBase with Store {
   @observable
   String date = DateTime.now().toString();
 
+  @observable
+  PetModel? petModel;
+
   @action
   Future<List<CharacterModel>> fecth() async {
     fecthResponse = AppResponse.loading(message: "logando");
@@ -142,15 +145,15 @@ abstract class _RegisterStoreBase with Store {
         pelage: pelage!,
         photo: imagem!,
         size: size!,
-        species: species!,
+        species: species,
         status: petStatus,
         date: date,
         city: city,
         contact: numberPhone,
         observation: observation);
     appResponse = AppResponse.loading(message: "logando");
-    await _repo.post(pet);
-    appResponse = AppResponse.completed(pet, message: "complete");
+    petModel = await _repo.post(pet);
+    appResponse = AppResponse.completed(petModel, message: "complete");
     imagem = null;
   }
 }

@@ -109,13 +109,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.species', context: context);
 
   @override
-  String? get species {
+  String get species {
     _$speciesAtom.reportRead();
     return super.species;
   }
 
   @override
-  set species(String? value) {
+  set species(String value) {
     _$speciesAtom.reportWrite(value, super.species, () {
       super.species = value;
     });
@@ -489,6 +489,22 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
     });
   }
 
+  late final _$petModelAtom =
+      Atom(name: '_RegisterStoreBase.petModel', context: context);
+
+  @override
+  PetModel? get petModel {
+    _$petModelAtom.reportRead();
+    return super.petModel;
+  }
+
+  @override
+  set petModel(PetModel? value) {
+    _$petModelAtom.reportWrite(value, super.petModel, () {
+      super.petModel = value;
+    });
+  }
+
   late final _$fecthAsyncAction =
       AsyncAction('_RegisterStoreBase.fecth', context: context);
 
@@ -570,7 +586,8 @@ statusPet: ${statusPet},
 numberPhone: ${numberPhone},
 observation: ${observation},
 city: ${city},
-date: ${date}
+date: ${date},
+petModel: ${petModel}
     ''';
   }
 }
