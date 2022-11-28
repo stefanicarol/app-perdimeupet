@@ -16,13 +16,11 @@ class _FindDetailsPageState extends State<FindDetailsPage> {
   @override
   Widget build(BuildContext context) {
     String data =
-        "${widget.petModel.species.species!} ${widget.petModel.gender.gender!}, da raça ${widget.petModel.catBreed!.catBreed!.toLowerCase()}, cor ${widget.petModel.color.color!}, pelagem ${widget.petModel.pelage.pelage!}, porte ${widget.petModel.size.size!}.";
-
+        "${widget.petModel.species} ${widget.petModel.gender}, da raça ${widget.petModel.catBreed!.toLowerCase()}, cor ${widget.petModel.color}, pelagem ${widget.petModel.pelage}, porte ${widget.petModel.size}.";
+    String status =
+        widget.petModel.returned ? "DEVOLVIDO AO DONO" : "DONO NÃO ENCONTRADO";
     return SafeArea(
       child: Scaffold(
-        bottomSheet: BottomSheetCustom(
-          phoneNumber: widget.petModel.contact!,
-        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -51,6 +49,15 @@ class _FindDetailsPageState extends State<FindDetailsPage> {
                                     fontSize: 22,
                                     color: AppTheme
                                         .defaultTheme.secondaryHeaderColor))),
+                        Center(
+                            child: Text(status,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
+                                    color: !widget.petModel.returned
+                                        ? AppTheme.defaultTheme.errorColor
+                                        : AppTheme.defaultTheme.primaryColor))),
                         Row(children: [
                           Expanded(
                               child: Text(data,
@@ -75,6 +82,10 @@ class _FindDetailsPageState extends State<FindDetailsPage> {
                                   "encontrado em ${widget.petModel.city} na data de ${widget.petModel.date}.",
                                   maxLines: 2))
                         ]),
+                        const Divider(),
+                        BottomSheetCustom(
+                          phoneNumber: widget.petModel.contact,
+                        )
                       ]),
                 )
               ],

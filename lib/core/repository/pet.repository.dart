@@ -5,8 +5,9 @@ import '../services/api_provider.dart';
 class PetRepository {
   final ApiProvider? _provider;
   String url = ApiConstants.pets;
-  String endFind = ApiConstants.petsfind;
-  String endLost = ApiConstants.petslost;
+  String filter = ApiConstants.filterpets;
+  String mypets = ApiConstants.mypets;
+
   PetRepository(this._provider);
 
   post(PetModel petModel) async {
@@ -18,13 +19,23 @@ class PetRepository {
     return response.map<PetModel>((json) => PetModel.fromJson(json)).toList();
   }
 
-  Future<List<PetModel>> fetchFind() async {
-    var response = await _provider!.restClient!.get(endFind);
+  Future<List<PetModel>> fetchFilter(String status) async {
+    var response = await _provider!.restClient!.get('$filter$status');
     return response.map<PetModel>((json) => PetModel.fromJson(json)).toList();
   }
 
-  Future<List<PetModel>> fetchLost() async {
-    var response = await _provider!.restClient!.get(endLost);
+  Future<List<PetModel>> fetchMyPets(String owner) async {
+    var response = await _provider!.restClient!.get('$mypets$owner');
     return response.map<PetModel>((json) => PetModel.fromJson(json)).toList();
+  }
+
+  Future<List<PetModel>> deleteMyPets(String id) async {
+    var response = await _provider!.restClient!.delete('$mypets$id');
+    return response.map<PetModel>((json) => PetModel.fromJson(json)).toList();
+  }
+
+  Future<PetModel> update(PetModel petModel, String id) async {
+    var response = await _provider!.restClient!.put(petModel, '$url/$id');
+    return PetModel.fromJson(response["updatePet"]);
   }
 }

@@ -36,13 +36,15 @@ abstract class _RegisterStoreBase with Store {
   String? imagem;
 
   @observable
-  Species? species;
+  String? species;
 
   @observable
-  int petStatus = 2;
+  String petStatus = "perdido";
 
   @observable
   List<CatBreed>? catBreedList;
+  @observable
+  List<DogBreed>? dogBreedList;
   @observable
   List<ColorPet>? colorList;
   @observable
@@ -61,43 +63,49 @@ abstract class _RegisterStoreBase with Store {
   List<PetModel> pets = [];
 
   @action
-  setSpecies(Species i) => species = i;
+  setSpecies(String i) => species = i;
 
   @action
-  setStatus(int i) => petStatus = i;
+  setStatus(String i) => petStatus = i;
 
   @observable
-  CatBreed? catBreed;
+  String? catBreed;
 
   @observable
-  ColorPet? color;
+  bool returned = false;
 
   @observable
-  Gender? gender;
+  String? dogBreed;
 
   @observable
-  Pelage? pelage;
+  String? color;
 
   @observable
-  SizePet? size;
+  String? gender;
 
   @observable
-  Species? speciesPet;
+  String? pelage;
+
+  @observable
+  String? size;
+
+  @observable
+  String? speciesPet;
 
   @observable
   int? statusPet;
 
   @observable
-  String? numberPhone;
+  String numberPhone = "(63) 9 9999-9999";
 
   @observable
   String? observation;
 
   @observable
-  String? city;
+  String city = "Palmas/TO";
 
   @observable
-  String? date;
+  String date = DateTime.now().toString();
 
   @action
   Future<List<CharacterModel>> fecth() async {
@@ -106,6 +114,7 @@ abstract class _RegisterStoreBase with Store {
 
     for (var element in character) {
       catBreedList = element.catBreed!;
+      dogBreedList = element.dogBreed!;
       colorList = element.color!;
       genderList = element.gender;
       pelageList = element.pelage!;
@@ -124,8 +133,9 @@ abstract class _RegisterStoreBase with Store {
   @action
   Future<void> post() async {
     PetModel pet = PetModel(
-        id: pets.length,
+        returned: returned,
         catBreed: catBreed,
+        dogBreed: dogBreed,
         color: color!,
         gender: gender!,
         owner: _auth.currentUser!.email!,

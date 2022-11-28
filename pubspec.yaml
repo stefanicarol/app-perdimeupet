@@ -27,6 +27,8 @@ dependencies:
   cached_network_image: ^3.2.1
   url_launcher: ^6.1.6
   mask_text_input_formatter: ^2.4.0
+  salomon_bottom_bar: ^3.3.1
+
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +44,15 @@ flutter:
       - assets/images/logo.png
       - assets/images/
       - assets/cat.png
-      - assets/dog.png
+      - assets/dog.png  
+      - assets/gatos/1.png
+      - assets/gatos/2.png
+      - assets/gatos/3.png
+      - assets/gatos/4.png 
+      - assets/encontrado.png
+      - assets/devolvido.png
+      - assets/back.jpg
+      - assets/logo_perdi.png
 
   fonts:
     - family: Quicksand

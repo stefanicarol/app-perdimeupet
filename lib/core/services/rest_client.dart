@@ -53,4 +53,42 @@ class RestClient with ProviderError {
       }
     }
   }
+
+  Future<dynamic> put(body, String url) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      throw InternetConnectionException();
+    } else {
+      final response =
+          await http.put(Uri.parse(Env.envConfig!['base_url'] + url),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: jsonEncode(body));
+      if (response.statusCode != 200) {
+        throw returnResponse(response.statusCode, response.body);
+      } else {
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      }
+    }
+  }
+
+  Future<dynamic> delete(String url) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      throw InternetConnectionException();
+    } else {
+      final response = await http.delete(
+        Uri.parse(Env.envConfig!['base_url'] + url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode != 200) {
+        throw returnResponse(response.statusCode, response.body);
+      } else {
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      }
+    }
+  }
 }

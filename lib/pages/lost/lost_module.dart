@@ -9,6 +9,6 @@ class LostModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (context, args) => LostPage()),
+    ChildRoute('/', child: (context, args) => const LostPage()),
   ];
 }

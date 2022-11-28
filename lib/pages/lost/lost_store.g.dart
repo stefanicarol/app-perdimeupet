@@ -25,100 +25,52 @@ mixin _$LostStore on _LostStoreBase, Store {
     });
   }
 
-  late final _$characterAtom =
-      Atom(name: '_LostStoreBase.character', context: context);
+  late final _$petAtom = Atom(name: '_LostStoreBase.pet', context: context);
 
   @override
-  List<CharacterModel>? get character {
-    _$characterAtom.reportRead();
-    return super.character;
+  PetModel? get pet {
+    _$petAtom.reportRead();
+    return super.pet;
   }
 
   @override
-  set character(List<CharacterModel>? value) {
-    _$characterAtom.reportWrite(value, super.character, () {
-      super.character = value;
+  set pet(PetModel? value) {
+    _$petAtom.reportWrite(value, super.pet, () {
+      super.pet = value;
     });
   }
 
-  late final _$petListAtom =
-      Atom(name: '_LostStoreBase.petList', context: context);
+  late final _$listPetsAtom =
+      Atom(name: '_LostStoreBase.listPets', context: context);
 
   @override
-  List<PetModel>? get petList {
-    _$petListAtom.reportRead();
-    return super.petList;
+  List<PetModel>? get listPets {
+    _$listPetsAtom.reportRead();
+    return super.listPets;
   }
 
   @override
-  set petList(List<PetModel>? value) {
-    _$petListAtom.reportWrite(value, super.petList, () {
-      super.petList = value;
+  set listPets(List<PetModel>? value) {
+    _$listPetsAtom.reportWrite(value, super.listPets, () {
+      super.listPets = value;
     });
-  }
-
-  late final _$petReturnAtom =
-      Atom(name: '_LostStoreBase.petReturn', context: context);
-
-  @override
-  List<CatBreed>? get petReturn {
-    _$petReturnAtom.reportRead();
-    return super.petReturn;
-  }
-
-  @override
-  set petReturn(List<CatBreed>? value) {
-    _$petReturnAtom.reportWrite(value, super.petReturn, () {
-      super.petReturn = value;
-    });
-  }
-
-  late final _$fecthResponseAtom =
-      Atom(name: '_LostStoreBase.fecthResponse', context: context);
-
-  @override
-  AppResponse<List<CharacterModel>> get fecthResponse {
-    _$fecthResponseAtom.reportRead();
-    return super.fecthResponse;
-  }
-
-  @override
-  set fecthResponse(AppResponse<List<CharacterModel>> value) {
-    _$fecthResponseAtom.reportWrite(value, super.fecthResponse, () {
-      super.fecthResponse = value;
-    });
-  }
-
-  late final _$fecthLostAsyncAction =
-      AsyncAction('_LostStoreBase.fecthLost', context: context);
-
-  @override
-  Future<List<PetModel>> fecthLost() {
-    return _$fecthLostAsyncAction.run(() => super.fecthLost());
-  }
-
-  late final _$fecthLostCatAsyncAction =
-      AsyncAction('_LostStoreBase.fecthLostCat', context: context);
-
-  @override
-  Future<List<PetModel>> fecthLostCat() {
-    return _$fecthLostCatAsyncAction.run(() => super.fecthLostCat());
-  }
-
-  late final _$fecthLostDogAsyncAction =
-      AsyncAction('_LostStoreBase.fecthLostDog', context: context);
-
-  @override
-  Future<List<PetModel>> fecthLostDog() {
-    return _$fecthLostDogAsyncAction.run(() => super.fecthLostDog());
   }
 
   late final _$fecthAsyncAction =
       AsyncAction('_LostStoreBase.fecth', context: context);
 
   @override
-  Future<List<CharacterModel>?> fecth() {
+  Future<List<PetModel>> fecth() {
     return _$fecthAsyncAction.run(() => super.fecth());
+  }
+
+  late final _$fetchFilterAsyncAction =
+      AsyncAction('_LostStoreBase.fetchFilter', context: context);
+
+  @override
+  Future<List<PetModel>> fetchFilter(String species, String status) {
+    return _$fetchFilterAsyncAction
+        .run(() => super.fetchFilter(species, status));
   }
 
   late final _$_LostStoreBaseActionController =
@@ -139,10 +91,8 @@ mixin _$LostStore on _LostStoreBase, Store {
   String toString() {
     return '''
 response: ${response},
-character: ${character},
-petList: ${petList},
-petReturn: ${petReturn},
-fecthResponse: ${fecthResponse}
+pet: ${pet},
+listPets: ${listPets}
     ''';
   }
 }

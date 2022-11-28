@@ -29,6 +29,12 @@ class _StoragePageState extends State<StoragePage> {
     return image;
   }
 
+  Future<XFile?> getCamera() async {
+    final ImagePicker picker = ImagePicker();
+    XFile? image = await picker.pickImage(source: ImageSource.camera);
+    return image;
+  }
+
   Future<UploadTask> upload(String path) async {
     File file = File(path);
     try {
@@ -71,6 +77,28 @@ class _StoragePageState extends State<StoragePage> {
     }
   }
 
+  pickAndUploadCamera() async {
+    XFile? file = await getCamera();
+    if (file != null) {
+      UploadTask task = await upload(file.path);
+
+      task.snapshotEvents.listen((TaskSnapshot snapshot) async {
+        if (snapshot.state == TaskState.running) {
+          setState(() {
+            uploading = true;
+            total = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          });
+        } else if (snapshot.state == TaskState.success) {
+          final photoRef = snapshot.ref;
+          arquivo = await photoRef.getDownloadURL();
+          refs = photoRef;
+
+          setState(() => uploading = false);
+        }
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -90,7 +118,7 @@ class _StoragePageState extends State<StoragePage> {
         centerTitle: true,
         title: uploading
             ? Text(
-                '${total.round()}% enviado',
+                '${total.round()}% enviando',
                 style: const TextStyle(color: Colors.black),
               )
             : const Text(
@@ -114,8 +142,12 @@ class _StoragePageState extends State<StoragePage> {
                 )
               : IconButton(
                   icon: const Icon(Icons.add_a_photo),
-                  onPressed: pickAndUploadImage,
-                )
+                  onPressed: pickAndUploadCamera,
+                ),
+          IconButton(
+            icon: const Icon(Icons.image),
+            onPressed: pickAndUploadImage,
+          )
         ],
         elevation: 0,
       ),

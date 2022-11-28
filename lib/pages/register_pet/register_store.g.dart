@@ -109,13 +109,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.species', context: context);
 
   @override
-  Species? get species {
+  String? get species {
     _$speciesAtom.reportRead();
     return super.species;
   }
 
   @override
-  set species(Species? value) {
+  set species(String? value) {
     _$speciesAtom.reportWrite(value, super.species, () {
       super.species = value;
     });
@@ -125,13 +125,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.petStatus', context: context);
 
   @override
-  int get petStatus {
+  String get petStatus {
     _$petStatusAtom.reportRead();
     return super.petStatus;
   }
 
   @override
-  set petStatus(int value) {
+  set petStatus(String value) {
     _$petStatusAtom.reportWrite(value, super.petStatus, () {
       super.petStatus = value;
     });
@@ -150,6 +150,22 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   set catBreedList(List<CatBreed>? value) {
     _$catBreedListAtom.reportWrite(value, super.catBreedList, () {
       super.catBreedList = value;
+    });
+  }
+
+  late final _$dogBreedListAtom =
+      Atom(name: '_RegisterStoreBase.dogBreedList', context: context);
+
+  @override
+  List<DogBreed>? get dogBreedList {
+    _$dogBreedListAtom.reportRead();
+    return super.dogBreedList;
+  }
+
+  @override
+  set dogBreedList(List<DogBreed>? value) {
+    _$dogBreedListAtom.reportWrite(value, super.dogBreedList, () {
+      super.dogBreedList = value;
     });
   }
 
@@ -269,15 +285,47 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.catBreed', context: context);
 
   @override
-  CatBreed? get catBreed {
+  String? get catBreed {
     _$catBreedAtom.reportRead();
     return super.catBreed;
   }
 
   @override
-  set catBreed(CatBreed? value) {
+  set catBreed(String? value) {
     _$catBreedAtom.reportWrite(value, super.catBreed, () {
       super.catBreed = value;
+    });
+  }
+
+  late final _$returnedAtom =
+      Atom(name: '_RegisterStoreBase.returned', context: context);
+
+  @override
+  bool get returned {
+    _$returnedAtom.reportRead();
+    return super.returned;
+  }
+
+  @override
+  set returned(bool value) {
+    _$returnedAtom.reportWrite(value, super.returned, () {
+      super.returned = value;
+    });
+  }
+
+  late final _$dogBreedAtom =
+      Atom(name: '_RegisterStoreBase.dogBreed', context: context);
+
+  @override
+  String? get dogBreed {
+    _$dogBreedAtom.reportRead();
+    return super.dogBreed;
+  }
+
+  @override
+  set dogBreed(String? value) {
+    _$dogBreedAtom.reportWrite(value, super.dogBreed, () {
+      super.dogBreed = value;
     });
   }
 
@@ -285,13 +333,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.color', context: context);
 
   @override
-  ColorPet? get color {
+  String? get color {
     _$colorAtom.reportRead();
     return super.color;
   }
 
   @override
-  set color(ColorPet? value) {
+  set color(String? value) {
     _$colorAtom.reportWrite(value, super.color, () {
       super.color = value;
     });
@@ -301,13 +349,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.gender', context: context);
 
   @override
-  Gender? get gender {
+  String? get gender {
     _$genderAtom.reportRead();
     return super.gender;
   }
 
   @override
-  set gender(Gender? value) {
+  set gender(String? value) {
     _$genderAtom.reportWrite(value, super.gender, () {
       super.gender = value;
     });
@@ -317,13 +365,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.pelage', context: context);
 
   @override
-  Pelage? get pelage {
+  String? get pelage {
     _$pelageAtom.reportRead();
     return super.pelage;
   }
 
   @override
-  set pelage(Pelage? value) {
+  set pelage(String? value) {
     _$pelageAtom.reportWrite(value, super.pelage, () {
       super.pelage = value;
     });
@@ -333,13 +381,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.size', context: context);
 
   @override
-  SizePet? get size {
+  String? get size {
     _$sizeAtom.reportRead();
     return super.size;
   }
 
   @override
-  set size(SizePet? value) {
+  set size(String? value) {
     _$sizeAtom.reportWrite(value, super.size, () {
       super.size = value;
     });
@@ -349,13 +397,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.speciesPet', context: context);
 
   @override
-  Species? get speciesPet {
+  String? get speciesPet {
     _$speciesPetAtom.reportRead();
     return super.speciesPet;
   }
 
   @override
-  set speciesPet(Species? value) {
+  set speciesPet(String? value) {
     _$speciesPetAtom.reportWrite(value, super.speciesPet, () {
       super.speciesPet = value;
     });
@@ -381,13 +429,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.numberPhone', context: context);
 
   @override
-  String? get numberPhone {
+  String get numberPhone {
     _$numberPhoneAtom.reportRead();
     return super.numberPhone;
   }
 
   @override
-  set numberPhone(String? value) {
+  set numberPhone(String value) {
     _$numberPhoneAtom.reportWrite(value, super.numberPhone, () {
       super.numberPhone = value;
     });
@@ -413,13 +461,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.city', context: context);
 
   @override
-  String? get city {
+  String get city {
     _$cityAtom.reportRead();
     return super.city;
   }
 
   @override
-  set city(String? value) {
+  set city(String value) {
     _$cityAtom.reportWrite(value, super.city, () {
       super.city = value;
     });
@@ -429,13 +477,13 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       Atom(name: '_RegisterStoreBase.date', context: context);
 
   @override
-  String? get date {
+  String get date {
     _$dateAtom.reportRead();
     return super.date;
   }
 
   @override
-  set date(String? value) {
+  set date(String value) {
     _$dateAtom.reportWrite(value, super.date, () {
       super.date = value;
     });
@@ -469,7 +517,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       ActionController(name: '_RegisterStoreBase', context: context);
 
   @override
-  dynamic setSpecies(Species i) {
+  dynamic setSpecies(String i) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setSpecies');
     try {
@@ -480,7 +528,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
-  dynamic setStatus(int i) {
+  dynamic setStatus(String i) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setStatus');
     try {
@@ -502,6 +550,7 @@ imagem: ${imagem},
 species: ${species},
 petStatus: ${petStatus},
 catBreedList: ${catBreedList},
+dogBreedList: ${dogBreedList},
 colorList: ${colorList},
 genderList: ${genderList},
 pelageList: ${pelageList},
@@ -510,6 +559,8 @@ speciesList: ${speciesList},
 character: ${character},
 pets: ${pets},
 catBreed: ${catBreed},
+returned: ${returned},
+dogBreed: ${dogBreed},
 color: ${color},
 gender: ${gender},
 pelage: ${pelage},

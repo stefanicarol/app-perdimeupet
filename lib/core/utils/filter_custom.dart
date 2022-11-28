@@ -29,13 +29,13 @@ class _FilterState extends State<Filter> {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         OutlinedButton.icon(
-          icon: const Icon(FontAwesomeIcons.dog, color: Colors.black87),
+          icon: const Icon(FontAwesomeIcons.dog, color: Colors.black),
           label: const Text(
             "Auau",
-            style: TextStyle(color: Colors.black87),
+            style: TextStyle(color: Colors.black),
           ),
           onPressed: () {
             widget.onPressDog();
@@ -48,7 +48,10 @@ class _FilterState extends State<Filter> {
           style: ElevatedButton.styleFrom(
             backgroundColor: dog ? isColorFilter : isNotColorFilter,
             side: BorderSide(
-                width: 1.5, color: dog ? isColorFilter : Colors.black),
+                width: 1.5,
+                color: dog
+                    ? isColorFilter
+                    : const Color.fromARGB(221, 157, 156, 156)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),
@@ -75,7 +78,10 @@ class _FilterState extends State<Filter> {
             elevation: 2,
             backgroundColor: cat ? isColorFilter : isNotColorFilter,
             side: BorderSide(
-                width: 1.5, color: cat ? isColorFilter : Colors.black),
+                width: 1.5,
+                color: cat
+                    ? isColorFilter
+                    : const Color.fromARGB(221, 157, 156, 156)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),
@@ -101,7 +107,10 @@ class _FilterState extends State<Filter> {
           style: ElevatedButton.styleFrom(
             backgroundColor: all ? isColorFilter : isNotColorFilter,
             side: BorderSide(
-                width: 1.5, color: all ? isColorFilter : Colors.black),
+                width: 1.5,
+                color: all
+                    ? isColorFilter
+                    : const Color.fromARGB(221, 157, 156, 156)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),

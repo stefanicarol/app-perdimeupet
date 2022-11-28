@@ -146,10 +146,10 @@ class _AppColors {
 }
 
 class AppColors {
-  static const Color primaryColor = Color(0xff232f34);
-  static const Color onPrimary = Color(0xff0CF2B4);
-  static const Color accentColor = Color.fromARGB(255, 13, 13, 14);
-  static const Color secondaryColor = Color(0xfff9aa33);
+  static const Color primaryColor = Color(0xff234d20);
+  static const Color onPrimary = Color(0xffc9df8a);
+  static const Color accentColor = Color(0xfff8872e);
+  static const Color secondaryColor = Color(0xfffdca49);
   static const Color primaryTextColor = Color(0xff005A87);
   static const Color secondaryTextColor = Color(0xff374049);
   static const Color secondaryButtonColor = Color(0xff00CD7C);

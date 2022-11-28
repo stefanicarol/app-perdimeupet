@@ -25,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController cityController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController observationController = TextEditingController();
+  bool isDog = true;
 
   @override
   void initState() {
@@ -36,13 +37,9 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20),
-            ),
-          ),
+          shape: const RoundedRectangleBorder(),
           backgroundColor: AppTheme.defaultTheme.primaryColor,
-          title: const Text("Cadastre seu pet"),
+          title: Text("Cadastre seu pet".toUpperCase()),
           centerTitle: true,
           elevation: 0,
         ),
@@ -85,8 +82,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           groupValue: store.classification!,
                           value: SingingCharacter.cachorro,
                           onChanged: (value) {
+                            setState(() {
+                              isDog = true;
+                            });
                             store.classification = SingingCharacter.cachorro;
-                            store.species = store.speciesList!.last;
+                            store.species = store.speciesList!.last.species;
                           },
                         ),
                         CustomRadioListTile(
@@ -94,8 +94,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           groupValue: store.classification!,
                           value: SingingCharacter.gato,
                           onChanged: (value) {
+                            setState(() {
+                              isDog = false;
+                            });
                             store.classification = value;
-                            store.species = store.speciesList!.first;
+                            store.species = store.speciesList!.first.species;
                           },
                         ),
                       ],
@@ -111,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: SingingCharacter.perdido,
                           onChanged: (value) {
                             store.status = value;
-                            store.petStatus = SingingCharacter.perdido.id;
+                            store.petStatus = SingingCharacter.perdido.name;
                           },
                         ),
                         CustomRadioListTile(
@@ -120,34 +123,70 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: SingingCharacter.achado,
                           onChanged: (value) {
                             store.status = value;
-                            store.petStatus = SingingCharacter.achado.id;
+                            store.petStatus = SingingCharacter.achado.name;
                           },
                         ),
                       ],
                     ),
                     const Divider(),
                     const SizedBox(height: 10),
-                    const Text("Raça gato",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 5),
-                    DropdownButtonFormField(
-                      items: store.catBreedList!
-                          .map<DropdownMenuItem<CatBreed>>((value) {
-                        return DropdownMenuItem<CatBreed>(
-                          value: value,
-                          child: Text(
-                            value.catBreed!,
+                    isDog
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Raça cachorro",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(height: 5),
+                              DropdownButtonFormField(
+                                hint: const Text("Selecione"),
+                                items: store.dogBreedList!
+                                    .map<DropdownMenuItem<DogBreed>>((value) {
+                                  return DropdownMenuItem<DogBreed>(
+                                    value: value,
+                                    child: Text(
+                                      value.dogBreed!,
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) {
+                                  DogBreed dog = newValue as DogBreed;
+                                  store.dogBreed = dog.dogBreed;
+                                },
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Raça gato",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(height: 5),
+                              DropdownButtonFormField(
+                                hint: const Text("Selecione"),
+                                items: store.catBreedList!
+                                    .map<DropdownMenuItem<CatBreed>>((value) {
+                                  return DropdownMenuItem<CatBreed>(
+                                    value: value,
+                                    child: Text(
+                                      value.catBreed!,
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) {
+                                  CatBreed cat = newValue as CatBreed;
+                                  store.catBreed = cat.catBreed;
+                                },
+                              ),
+                              const SizedBox(height: 10),
+                            ],
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        store.catBreed = newValue as CatBreed?;
-                      },
-                    ),
-                    const SizedBox(height: 10),
                     const Text("Cor",
                         style: TextStyle(
                             color: Colors.black,
@@ -155,6 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      hint: const Text("Selecione"),
                       items: store.colorList!
                           .map<DropdownMenuItem<ColorPet>>((value) {
                         return DropdownMenuItem<ColorPet>(
@@ -165,7 +205,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       }).toList(),
                       onChanged: (newValue) {
-                        store.color = newValue as ColorPet?;
+                        ColorPet color = newValue as ColorPet;
+                        store.color = color.color;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -176,6 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      hint: const Text("Selecione"),
                       items: store.genderList!
                           .map<DropdownMenuItem<Gender>>((value) {
                         return DropdownMenuItem<Gender>(
@@ -186,7 +228,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       }).toList(),
                       onChanged: (newValue) {
-                        store.gender = newValue as Gender?;
+                        Gender gender = newValue as Gender;
+                        store.gender = gender.gender;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -197,6 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      hint: const Text("Selecione"),
                       items: store.pelageList!
                           .map<DropdownMenuItem<Pelage>>((value) {
                         return DropdownMenuItem<Pelage>(
@@ -207,7 +251,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       }).toList(),
                       onChanged: (newValue) {
-                        store.pelage = newValue as Pelage?;
+                        Pelage pelage = newValue as Pelage;
+                        store.pelage = pelage.pelage;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -218,6 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
                     DropdownButtonFormField(
+                      hint: const Text("Selecione"),
                       items: store.sizeList!
                           .map<DropdownMenuItem<SizePet>>((value) {
                         return DropdownMenuItem<SizePet>(
@@ -228,7 +274,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       }).toList(),
                       onChanged: (newValue) {
-                        store.size = newValue as SizePet?;
+                        SizePet size = newValue as SizePet;
+                        store.size = size.size;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -244,6 +291,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                       controller: phoneController,
                       decoration: const InputDecoration(
+                        hintText: "(99) 99999-9999",
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(width: 3),
                         ),
@@ -259,6 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextField(
                       controller: cityController,
                       decoration: const InputDecoration(
+                        hintText: "Cidade/Estado",
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(width: 3),
                         ),
@@ -277,6 +326,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         MaskTextInputFormatter(mask: "##/##/####")
                       ],
                       decoration: const InputDecoration(
+                        hintText: "00/00/0000",
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(width: 3),
                         ),
@@ -332,12 +382,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         : const SizedBox(),
                     Center(
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             store.observation = observationController.text;
                             store.date = dateController.text;
                             store.city = cityController.text;
                             store.numberPhone = phoneController.text;
-                            store.post();
+                            await store.post();
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(

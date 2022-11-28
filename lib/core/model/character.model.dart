@@ -1,13 +1,13 @@
 class CharacterModel {
   String? sId;
   List<CatBreed>? catBreed;
+  List<DogBreed>? dogBreed;
   List<ColorPet>? color;
   List<Gender>? gender;
   List<Pelage>? pelage;
   List<SizePet>? size;
   List<Species>? species;
   List<Status>? status;
-
   String? createdAt;
   String? updatedAt;
   int? iV;
@@ -15,6 +15,7 @@ class CharacterModel {
   CharacterModel(
       {this.sId,
       this.catBreed,
+      this.dogBreed,
       this.color,
       this.gender,
       this.pelage,
@@ -30,43 +31,49 @@ class CharacterModel {
     if (json['cat_breed'] != null) {
       catBreed = <CatBreed>[];
       json['cat_breed'].forEach((v) {
-        catBreed!.add(new CatBreed.fromJson(v));
+        catBreed!.add(CatBreed.fromJson(v));
+      });
+    }
+    if (json['dog_breed'] != null) {
+      dogBreed = <DogBreed>[];
+      json['dog_breed'].forEach((v) {
+        dogBreed!.add(DogBreed.fromJson(v));
       });
     }
     if (json['color'] != null) {
       color = <ColorPet>[];
       json['color'].forEach((v) {
-        color!.add(new ColorPet.fromJson(v));
+        color!.add(ColorPet.fromJson(v));
       });
     }
     if (json['gender'] != null) {
       gender = <Gender>[];
       json['gender'].forEach((v) {
-        gender!.add(new Gender.fromJson(v));
+        gender!.add(Gender.fromJson(v));
       });
     }
     if (json['pelage'] != null) {
       pelage = <Pelage>[];
       json['pelage'].forEach((v) {
-        pelage!.add(new Pelage.fromJson(v));
+        pelage!.add(Pelage.fromJson(v));
       });
     }
     if (json['size'] != null) {
       size = <SizePet>[];
       json['size'].forEach((v) {
-        size!.add(new SizePet.fromJson(v));
+        size!.add(SizePet.fromJson(v));
       });
     }
     if (json['species'] != null) {
       species = <Species>[];
       json['species'].forEach((v) {
-        species!.add(new Species.fromJson(v));
+        species!.add(Species.fromJson(v));
       });
     }
     if (json['status'] != null) {
       status = <Status>[];
       json['status'].forEach((v) {
-        status!.add(new Status.fromJson(v));
+        status!.add(Status.fromJson(v));
       });
     }
 
@@ -76,33 +83,33 @@ class CharacterModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.catBreed != null) {
-      data['cat_breed'] = this.catBreed!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    if (catBreed != null) {
+      data['cat_breed'] = catBreed!.map((v) => v.toJson()).toList();
     }
-    if (this.color != null) {
-      data['color'] = this.color!.map((v) => v.toJson()).toList();
+    if (color != null) {
+      data['color'] = color!.map((v) => v.toJson()).toList();
     }
-    if (this.gender != null) {
-      data['gender'] = this.gender!.map((v) => v.toJson()).toList();
+    if (gender != null) {
+      data['gender'] = gender!.map((v) => v.toJson()).toList();
     }
-    if (this.pelage != null) {
-      data['pelage'] = this.pelage!.map((v) => v.toJson()).toList();
+    if (pelage != null) {
+      data['pelage'] = pelage!.map((v) => v.toJson()).toList();
     }
-    if (this.size != null) {
-      data['size'] = this.size!.map((v) => v.toJson()).toList();
+    if (size != null) {
+      data['size'] = size!.map((v) => v.toJson()).toList();
     }
-    if (this.species != null) {
-      data['species'] = this.species!.map((v) => v.toJson()).toList();
+    if (species != null) {
+      data['species'] = species!.map((v) => v.toJson()).toList();
     }
-    if (this.status != null) {
-      data['status'] = this.status!.map((v) => v.toJson()).toList();
+    if (status != null) {
+      data['status'] = status!.map((v) => v.toJson()).toList();
     }
 
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }
@@ -121,10 +128,32 @@ class CatBreed {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['cat_breed'] = this.catBreed;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['cat_breed'] = catBreed;
+    data['_id'] = sId;
+    return data;
+  }
+}
+
+class DogBreed {
+  int? id;
+  String? dogBreed;
+  String? sId;
+
+  DogBreed({this.id, this.dogBreed, this.sId});
+
+  DogBreed.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    dogBreed = json['dog_breed'];
+    sId = json['_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['dog_breed'] = dogBreed;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -143,10 +172,10 @@ class ColorPet {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['color'] = this.color;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['color'] = color;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -165,10 +194,10 @@ class Gender {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['gender'] = this.gender;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['gender'] = gender;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -187,10 +216,10 @@ class Pelage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['pelage'] = this.pelage;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['pelage'] = pelage;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -209,10 +238,10 @@ class SizePet {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['size'] = this.size;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['size'] = size;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -231,10 +260,10 @@ class Species {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['species'] = this.species;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['species'] = species;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -251,9 +280,9 @@ class Status {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['_id'] = sId;
     return data;
   }
 }

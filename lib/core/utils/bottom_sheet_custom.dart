@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../pages/lost/lost_store.dart';
+import '../../pages/lost/pages/lost_list_match.dart';
+
 class BottomSheetCustom extends StatefulWidget {
   final String phoneNumber;
 
@@ -14,6 +17,8 @@ class BottomSheetCustom extends StatefulWidget {
 }
 
 class _BottomSheetCustomState extends State<BottomSheetCustom> {
+  final LostStore store = LostStore();
+
   bool _hasCallSupport = false;
   Future<void>? _launched;
 
@@ -65,20 +70,21 @@ class _BottomSheetCustomState extends State<BottomSheetCustom> {
           ),
           const SizedBox(width: 5),
           ElevatedButton.icon(
-            label: const Text(
-              "Chat",
-              style: TextStyle(color: Colors.white),
+            label: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                "Match",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            onPressed: () {},
-            icon: const Icon(Icons.chat, color: Colors.white),
-          ),
-          const SizedBox(width: 5),
-          ElevatedButton.icon(
-            label: const Text(
-              "Match",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {},
+            onPressed: () {
+              // store.getClusters();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const LostListMatch(),
+                ),
+              );
+            },
             icon: const Icon(Icons.favorite, color: Colors.white),
           ),
           FutureBuilder<void>(future: _launched, builder: _launchStatus),

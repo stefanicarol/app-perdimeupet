@@ -1,71 +1,75 @@
-import 'character.model.dart';
-
 class PetModel {
-  final int id;
-  CatBreed? catBreed;
-  final ColorPet color;
-  final Gender gender;
+  String? sId;
+  final bool returned;
+  String? catBreed;
+  String? dogBreed;
+  final String color;
+  final String gender;
   final String owner;
-  final Pelage pelage;
+  final String pelage;
+  final String size;
+  final String species;
+  final String status;
   final String photo;
-  final SizePet size;
-  final Species species;
-  final int status;
-  String? contact;
-  String? city;
+  final String contact;
+  final String city;
   String? observation;
-  String? date;
+  final String date;
 
   PetModel({
-    required this.id,
+    this.sId,
+    required this.returned,
     this.catBreed,
+    required this.dogBreed,
     required this.color,
     required this.gender,
     required this.owner,
     required this.pelage,
-    required this.photo,
     required this.size,
     required this.species,
     required this.status,
-    this.contact,
-    this.city,
+    required this.photo,
+    required this.contact,
+    required this.city,
     this.observation,
-    this.date,
+    required this.date,
   });
 
   factory PetModel.fromJson(Map<String, dynamic> json) {
     return PetModel(
-      id: json['id'],
-      catBreed: json['cat_breed'] != null
-          ? CatBreed.fromJson(json['cat_breed'])
-          : null,
-      color: ColorPet.fromJson(json['color']),
-      gender: Gender.fromJson(json['gender']),
+      returned: json['returned'],
+      sId: json['_id'],
+      catBreed: json['cat_breed'],
+      dogBreed: json['dog_breed'],
+      color: json['color'],
+      gender: json['gender'],
       owner: json['owner'],
-      pelage: Pelage.fromJson(json['pelage']),
+      pelage: json['pelage'],
       photo: json['photo'],
-      size: SizePet.fromJson(json['size']),
-      species: Species.fromJson(json['species']),
+      size: json['size'],
+      species: json['species'],
       status: json['status'],
       contact: json['contact'] ?? "",
       city: json['city'] ?? "-",
-      observation: json['observation'] ?? "sem observação",
+      observation: json['observation'] ?? "Sem observação",
       date: json['date'] ?? "-",
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['_id'] = sId;
+    data['returned'] = returned;
     data['cat_breed'] = catBreed;
+    data['dog_breed'] = dogBreed;
     data['color'] = color;
     data['gender'] = gender;
     data['owner'] = owner;
     data['pelage'] = pelage;
-    data['photo'] = photo;
     data['size'] = size;
     data['species'] = species;
     data['status'] = status;
+    data['photo'] = photo;
     data['contact'] = contact;
     data['city'] = city;
     data['observation'] = observation;
